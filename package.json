@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/eunji120/Liri-Bot/issues"
   },
-  "homepage": "https://github.com/eunji120/Liri-Bot#readme"
+  "homepage": "https://github.com/eunji120/Liri-Bot#readme",
+  "dependencies": {
+    "node-spotify-api": "^1.0.7"
+  }
 }

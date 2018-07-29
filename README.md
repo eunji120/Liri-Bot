@@ -6,9 +6,8 @@ Similar to SIRI (Speech Interpretation and Recognition Interface), LIRI (Languag
 
 ## Technologies Used
 - JavaScript
-- Node JS
-- APIs
-- etc.
+- Node.js
+- npm packages: require, Spotify
 
 ### Acknowledgment
 - Google
