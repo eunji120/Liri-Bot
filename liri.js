@@ -66,5 +66,49 @@ function spotifyThis(song) {
 
 function movieThis(movieName) {
     console.log(movieName);
+    request("http://www.omdbapi.com/?i=tt3896198&apikey=" + omdbKey + "&query=" + movieName, function(error, response, body) {
+    
+    if(!error && response.statusCode === 200) {
+        //get Movie ID
+        var movieID = JSON.parse(body).results[0].id;
 
+        var queryURL ="";
+
+        request(queryURL, function(error, response, body) {
+            var movieObj = JSON.parse(body);
+
+            console.log("-------Title-------");
+            console.log(movieObj.origianl_title);
+
+            console.log("-------Year-------");
+            console.log(movieObj.release_date);
+
+            console.log("-------Rating-------");
+            console.log(movieObj)
+
+            console.log("-------Country-------");
+
+            console.log("-------Languages-------");
+
+            console.log("-------Plot-------");
+
+            console.log("-------Actors-------");
+        });
+    } else {
+        console.log(error);
+    }
+    });
 }
+
+function doWhatItSays() {
+    fs.readFile('random.txt', 'utf8', function(err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        var dataArr = data.split(',');
+        processCommands(dataArr[0], dataArr[1]);
+    });
+}
+
+//main process
+processCommands(inputComm, commandParam);
