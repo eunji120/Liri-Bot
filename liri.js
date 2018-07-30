@@ -69,10 +69,10 @@ function movieThis(movieName) {
     request("http://www.omdbapi.com/?i=tt3896198&apikey=" + omdbKey + "&query=" + movieName, function(error, response, body) {
     
     if(!error && response.statusCode === 200) {
-        //get Movie ID
+        //get movie ID
         var movieID = JSON.parse(body).results[0].id;
-
-        var queryURL ="";
+        //create new query using the movie ID
+        var queryURL ="" + movieID + "" + omdbKey + "";
 
         request(queryURL, function(error, response, body) {
             var movieObj = JSON.parse(body);
