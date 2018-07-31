@@ -1,16 +1,15 @@
-js 
+
 require("dotenv").config();
 
 //loading modules
-var keys = require("./keys.js");
-var spotify = require('spotify');
+var keys = require("./keys");
+var spotify = require(keys.spotify);
 var request = require('request');
 var fs = require('fs');
 var inputComm = process.argv[2];
 var commandParam = process.argv[3];
 var defaultMovie = "Frozen";
-var defaultSong = "Sorry Not Sorry";
-var omdbKey = keys.omdbKey; 
+var defaultSong = "Sorry Not Sorry"; 
 
 
 //function processing the input commands
@@ -64,46 +63,51 @@ function spotifyThis(song) {
     });
 }
 
-function movieThis(movieName) {
-    console.log(movieName);
-    request("http://www.omdbapi.com/?i=tt3896198&apikey=" + omdbKey + "&query=" + movieName, function(error, response, body) {
-    
-    if(!error && response.statusCode === 200) {
-        //get movie ID
-        var movieID = JSON.parse(body).results[0].id;
-        //create new query using the movie ID
-        var queryURL ="" + movieID + "" + omdbKey + "";
+function movieThis() {
 
-        request(queryURL, function(error, response, body) {
+    //get movie ID
+    var movieID = JSON.parse(body).results[0].id;
+    //create new query using the movie ID
+    var queryURL ="http://www.omdbapi.com/?t=" + movieID + "&y=&plot=short&apikey=trilogy";
+    
+    request(queryURL, function(error, response, body) {
+
+        if(!error && response.statusCode === 200) {
             var movieObj = JSON.parse(body);
 
-            console.log("-------Title-------");
-            console.log(movieObj.origianl_title);
+                console.log("-------Title-------");
+                console.log(movieObj.data.Title);
 
-            console.log("-------Year-------");
-            console.log(movieObj.release_date);
+                console.log("-------Year-------");
+                console.log(movieObj.data.Year);
 
-            console.log("-------Rating-------");
-            console.log(movieObj)
+                console.log("-------Rating-------");
+                console.log(movieObj.Ratings[0].Value);
+                if (data.Ratings[1]) {
+                    console.log(movieObj.Ratings[1].Value);
+                }
 
-            console.log("-------Country-------");
+                console.log("-------Country-------");
+                console.log(movieObj.data.Country);
 
-            console.log("-------Languages-------");
+                console.log("-------Languages-------");
+                console.log(movieObj.data.Languages);
 
-            console.log("-------Plot-------");
+                console.log("-------Plot-------");
+                console.log(movieObj.data.Plot);
 
-            console.log("-------Actors-------");
-        });
-    } else {
+                console.log("-------Actors-------");
+                console.log(movieObj.data.Actors);
+            } else {
         console.log(error);
     }
-    });
-}
+})
+};
 
 function doWhatItSays() {
     fs.readFile('random.txt', 'utf8', function(err, data) {
         if (err) {
-            return console.log(err);
+            console.log(err);
         }
         var dataArr = data.split(',');
         processCommands(dataArr[0], dataArr[1]);
